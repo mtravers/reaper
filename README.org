@@ -1,0 +1,12 @@
+A shell command to quickly kill off all the unnecessary browser tabs one accumulates.
+
+Works on Macs with Chrome, Brave, and maybe other Chrome-derived browsers.
+
+* Setup
+
+npm install -g lumo-cljs
+npm install applescript
+
+alias reaper='pushd /misc/repos/reaper/cljs; lumo -i reaper/core.cljs; popd'
+
+
