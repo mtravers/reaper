@@ -6,7 +6,7 @@
 
 (def applescript (js/require "applescript"))
 
-;;; ??? Not sure how to turn this into a normal (non-cps) fn. Javascript promises maybe?
+;;; TODO this cps-style is a pain, but not sure best way to convert to normal flow.
 (defn exec-cps
   [cont script]
   (.execString applescript script (fn [err res]
@@ -30,21 +30,19 @@
   [cont]
   (exec-app-cps
    (fn [tabs]
-     (exec-app-cps (fn [[urls names]]
-                     (cont
-                      (map (fn [tab url name]
-                             {:url url
-                              :title name
-                              :identifier (second (re-matches #"(.*) of application .*" tab))})
-                           (flatten1 tabs)
-                           (flatten1 urls)
-                           (flatten1 names))))
-                   (:browser config/config) "get [URL, name] of tabs of windows")
-     
-
-     )
-   (:browser config/config) "get tabs of windows"))
-
+     (exec-app-cps
+      (fn [[urls names]]
+        (cont
+         (map (fn [tab url name]
+                {:url url
+                 :title name
+                 :identifier (second (re-matches #"(.*) of application .*" tab))})
+              (flatten1 tabs)
+              (flatten1 urls)
+              (flatten1 names))))
+      (:browser config/config) "get [URL, name] of tabs of windows"))
+   (:browser config/config)
+   "get tabs of windows"))
 
 (defn close-tabs
   [tabs]
@@ -52,7 +50,6 @@
     (exec-app-cps (fn [_] (close-tabs (rest tabs)))
                   (:browser config/config)
                   (str "close " (:identifier (first tabs))))))
-    
 
 (defn grouped-tabs
   [tabs]
@@ -61,17 +58,16 @@
        (sort-by (comp count second))
        reverse))
 
-;;; TODO at least generalize for other browsers
-;;; TODO confirm step
 (defn clean-tabs
   [& do-it]
   (brave-fancy
    (fn [tabs]
      (let [trash (filter is-trash? tabs)]
+       ;; TODO prettier output, but this works
        (prn (str (count tabs) " tabs, " (count trash) " trash"))
-       (pprint/pprint (grouped-tabs  (map #(select-keys % [:url :title]) trash)))
+       (pprint/pprint (grouped-tabs (map #(select-keys % [:url :title]) trash)))
        (when do-it
          (close-tabs trash))))))
 
-
+;;; TODO dry-run option
 (clean-tabs true)
