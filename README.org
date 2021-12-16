@@ -14,6 +14,21 @@ Copy [[cljs/reaper/proto-config.cljs][=proto-config.cljs=]] into =config.cljs=, 
 npm install -g lumo-cljs
 npm install applescript
 
-alias reaper='pushd /misc/repos/reaper/cljs; lumo -i reaper/core.cljs; popd'
+alias reaper='pushd <loc>/reaper/src; lumo -c src -i reaper/core.cljs; popd'
 #+END_SRC
+
+* Development
+
+#+BEGIN_SRC
+lumo -c "src"
+(require 'reaper.core)
+#+END_SRC
+
+** TODO This will execute the reaper, which is ugh.
+
+* Notes
+
+** TODO Sometimes gets stuck closing tabs. Should maybe print as it goes along, so user knows where it is stuck.
+
+** TODO Idea: Use the tools here to build a good self-moniting system (like a bespoke hackable RescueTime).
 

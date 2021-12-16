@@ -7,7 +7,7 @@
 ;;; Some of these are more risky than others
 
 (def config
-  {:browser "Brave Browser"
+  {:browser "Brave Browser"             ;Can be "Google Chrome", and maybe other Chrome-based browsers
    :trash-sites
    ["twitter.com"
     "reddit.com"

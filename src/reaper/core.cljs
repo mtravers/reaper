@@ -26,7 +26,7 @@
   [{:keys [url]}]
   (some #(str/includes? url %) (:trash-sites config/config)))
 
-(defn brave-fancy
+(defn tabs-fancy
   [cont]
   (exec-app-cps
    (fn [tabs]
@@ -60,7 +60,7 @@
 
 (defn clean-tabs
   [& do-it]
-  (brave-fancy
+  (tabs-fancy
    (fn [tabs]
      (let [trash (filter is-trash? tabs)]
        ;; TODO prettier output, but this works
@@ -71,3 +71,5 @@
 
 ;;; TODO dry-run option
 (clean-tabs true)
+
+;;; TODO Idea: allow supplying a string, and delete all tabs matching (usefule for gc'ing rawsugar work tabs etc)
