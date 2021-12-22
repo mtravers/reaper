@@ -59,17 +59,41 @@
        reverse))
 
 (defn clean-tabs
-  [& do-it]
+  [trash? do-it]
   (tabs-fancy
    (fn [tabs]
-     (let [trash (filter is-trash? tabs)]
+     (let [trash (filter trash? tabs)]
        ;; TODO prettier output, but this works
-       (prn (str (count tabs) " tabs, " (count trash) " trash"))
        (pprint/pprint (grouped-tabs (map #(select-keys % [:url :title]) trash)))
+       (prn (str (count tabs) " tabs, " (count trash) " trash"))
        (when do-it
          (close-tabs trash))))))
 
-;;; TODO dry-run option
-(clean-tabs true)
+(defn actual-args
+  []
+  (->> js/process.argv
+       js->clj
+       (drop-while #(not (re-find #"\.cljs" %)))
+       rest))
 
-;;; TODO Idea: allow supplying a string, and delete all tabs matching (usefule for gc'ing rawsugar work tabs etc)
+(defn make-trash-filter
+  [string]
+  (let [pattern (re-pattern string)]
+    (fn [{:keys [title url]}]
+      (or (re-find pattern title)
+          (re-find pattern url)))))
+
+(defn main
+  []
+  (let [args (actual-args)]
+    (prn :args args)
+    (cond (empty? args)                 ;no args
+          (clean-tabs is-trash? true)   ;use trash-list
+          :else                         ;with arg, delete all tabs via string match
+          (clean-tabs (make-trash-filter (first args)) true))))
+
+;;; TODO dry-run option
+
+(main)
+
+

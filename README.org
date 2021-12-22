@@ -14,7 +14,11 @@ Copy [[cljs/reaper/proto-config.cljs][=proto-config.cljs=]] into =config.cljs=, 
 npm install -g lumo-cljs
 npm install applescript
 
-alias reaper='pushd <loc>/reaper/src; lumo -c src -i reaper/core.cljs; popd'
+reaper() {
+   pushd /opt/mt/repos/reaper
+   lumo -c src -f reaper/core.cljs $1
+   popd
+}
 #+END_SRC
 
 * Development
