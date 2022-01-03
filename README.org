@@ -36,3 +36,4 @@ lumo -c "src"
 
 ** TODO Idea: Use the tools here to build a good self-moniting system (like a bespoke hackable RescueTime).
 
+** See https://github.com/babashka/obb for a more developed Clojure/Applescript interop.

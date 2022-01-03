@@ -86,7 +86,6 @@
 (defn main
   []
   (let [args (actual-args)]
-    (prn :args args)
     (cond (empty? args)                 ;no args
           (clean-tabs is-trash? true)   ;use trash-list
           :else                         ;with arg, delete all tabs via string match
