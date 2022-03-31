@@ -8,7 +8,7 @@ Copyright © Hyperphor 2021
 
 * Setup
 
-Copy [[cljs/reaper/proto-config.cljs][=proto-config.cljs=]] into =config.cljs=, editing as desired.
+Copy [[https://github.com/mtravers/reaper/blob/master/src/reaper/proto-config.cljs][=proto-config.cljs=]] into =config.cljs=, editing as desired.
 
 #+BEGIN_SRC
 npm install -g lumo-cljs
@@ -28,12 +28,12 @@ lumo -c "src"
 (require 'reaper.core)
 #+END_SRC
 
-** TODO This will execute the reaper, which is ugh.
+- TODO This will execute the reaper, which is ugh.
 
 * Notes
 
-** TODO Sometimes gets stuck closing tabs. Should maybe print as it goes along, so user knows where it is stuck.
+- TODO Sometimes gets stuck closing tabs. Should maybe print as it goes along, so user knows where it is stuck.
 
-** TODO Idea: Use the tools here to build a good self-moniting system (like a bespoke hackable RescueTime).
+- TODO Idea: Use the tools here to build a good self-moniting system (like a bespoke hackable RescueTime).
 
-** See https://github.com/babashka/obb for a more developed Clojure/Applescript interop.
+- See https://github.com/babashka/obb for a more developed Clojure/Applescript interop.

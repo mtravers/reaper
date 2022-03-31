@@ -7,6 +7,8 @@
 (def applescript (js/require "applescript"))
 
 ;;; TODO this cps-style is a pain, but not sure best way to convert to normal flow.
+;;; Maybe core.async or promises?
+
 (defn exec-cps
   [cont script]
   (.execString applescript script (fn [err res]
