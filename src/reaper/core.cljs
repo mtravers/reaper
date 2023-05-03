@@ -78,20 +78,13 @@
        (drop-while #(not (re-find #"\.cljs" %)))
        rest))
 
-(defn make-trash-filter
-  [string]
-  (let [pattern (re-pattern string)]
-    (fn [{:keys [title url]}]
-      (or (re-find pattern title)
-          (re-find pattern url)))))
-
 (defn main
   []
   (let [args (actual-args)]
     (cond (empty? args)                 ;no args
           (clean-tabs is-trash? true)   ;use trash-list
           :else                         ;with arg, delete all tabs via string match
-          (clean-tabs (make-trash-filter (first args)) true))))
+          (clean-tabs identity false))))
 
 ;;; TODO dry-run option
 
