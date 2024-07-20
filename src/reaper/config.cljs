@@ -9,6 +9,7 @@
   {:browser "Brave Browser"
    :trash-sites
    ["twitter.com"
+    "/x.com"                            ;note!
     "mastodon.social"
     "reddit.com"
     "imgur.com"

@@ -78,15 +78,18 @@
        (drop-while #(not (re-find #"\.cljs" %)))
        rest))
 
+(defn string-match?
+  [s {:keys [url title]}]
+  (or (str/includes? url s)
+      (str/includes? title s)))
+
 (defn main
   []
   (let [args (actual-args)]
     (cond (empty? args)                 ;no args
           (clean-tabs is-trash? true)   ;use trash-list
-          :else                         ;with arg, delete all tabs via string match
-          (clean-tabs identity false))))
-
-;;; TODO dry-run option
+          :else                         ;with arg, delete all tabs via string match, if true supplied
+          (clean-tabs (partial string-match? (first args)) (= "true" (second args))))))
 
 (main)
 
